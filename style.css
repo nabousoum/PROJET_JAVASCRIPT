@@ -97,3 +97,76 @@ img{
    opacity: 0.5;
     padding: 1%;
 }
+.modal-container{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    animation: zoomIn;
+    animation-duration: 2s;
+}
+.modal-container.show-modal{
+    display: block;
+}
+.modal{
+   display: flex;
+   flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    overflow: hidden;
+    top:10%;
+    left: 40%;
+}
+#header-modal{
+     background-color:rgb(245, 150, 165) ;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding: 15px;
+}
+#modal-form{
+    display: flex;
+    flex: 6;
+    padding: 20px;
+    background-color: white;
+}
+#header-modal p{
+    margin-left: 5%;
+    color: white;
+}
+#header-modal i{
+  text-align: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+#modal-form form div{
+    margin: 15px 0;
+}
+#modal-form form label{
+   display: block;
+   margin-bottom: 5px;
+}
+input[type=submit]{
+    background-color: rgb(245, 150, 165) ;
+    color: white;
+}
+#modal-form form input{
+    padding: 8px;
+    width: 100%;
+ }
+ #modal-form form textarea{
+
+    width: 100%;
+ }
+ .close-btn{
+    margin-left: 40%;
+     background-color: transparent;
+     position: absolute;
+     right: 10px;
+ }
