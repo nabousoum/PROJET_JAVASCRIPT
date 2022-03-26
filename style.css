@@ -43,16 +43,36 @@ body{
     animation: zoomIn;
     animation-duration: 2s; 
 }
+.column::-webkit-scrollbar{
+    width:10px;
+    height:20px
+}
+.column::-webkit-scrollbar-thumb{
+    background: plum;
+    border-radius: 10px;
+}
 .task{
-    border: 1px solid black;
-    height: 5%;
+    border: 1px solid rgb(163, 160, 160);
+    height: 10%;
+    overflow-y: scroll;
     background-color: transparent;
     width: 95%;
     margin: 10px 5px;
     border-radius: 5px;
     display: flex;
     align-items: center;
+    animation: jello;
+    animation-duration: 2s;
 }
+.task::-webkit-scrollbar{
+    width:10px;
+    height:5px
+}
+.task::-webkit-scrollbar-thumb{
+    background: plum;
+    border-radius: 10px;
+}
+
 .taskInfo{
     margin-left: 10%;
     width: 80%;
@@ -61,10 +81,12 @@ body{
 .fa-solid.fa-angles-left{
    position: absolute;
    left: 10px;
+   opacity: 0.5;
 }
 .fa-solid.fa-angles-right{
    position: absolute;
-   right: 10px;
+   right: 12px;
+   opacity: 0.5;
 }
 
 .column-name{
@@ -80,9 +102,19 @@ body{
 } */
 .column-contain{
     width: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     flex: 15;
+    overflow-y: scroll;
+}
+.column-contain::-webkit-scrollbar{
+    width:10px;
+    height:20px
+}
+.column-contain::-webkit-scrollbar-thumb{
+    background: plum;
+    border-radius: 10px;
 }
 .logo{
     position: absolute;

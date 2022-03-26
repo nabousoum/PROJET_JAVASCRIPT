@@ -6,12 +6,45 @@ const notes = document.getElementById('notes');
 const close = document.getElementById('close');
 const modalContainer = document.querySelector('.modal-container');
 const addTask = document.getElementById('addTask');
+const myForm = document.getElementById('form');
+const texta = document.getElementById('textarea');
+var date = document.getElementById('date').value;
+var heureDebut = document.getElementById('heureDebut').value;
+var heureFin = document.getElementById('heureFin').value;
+
+ 
+myForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    const div2 = document.querySelector('.column-contain');
+    var textarea = document.getElementById('textarea').value;
+    var date = document.getElementById('date').value;
+    var heureDebut = document.getElementById('heureDebut').value;
+    var heureFin = document.getElementById('heureFin').value;
+    //var data = new FormData();
+   // data.append( "json", JSON.stringify( payload ) );
+    
+    fetch("data/db.json",
+    {
+        method: "POST",
+        body: JSON.stringify({
+            description:textarea,
+            date:date,
+            heureDebut:heureDebut,
+            heureFin:heureFin
+        }),
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){ console.log(data ) })
+       
+        var text = texta.value;
+        createTask(div2);
+})
 
 function getTask(){
     fetch('data/db.json').then((reponse) => 
     reponse.json().then((data) => {
-        console.log(data);
-        createColumn(data.taches[0])
+        //console.log(data);
+        createColumn(data);
     })
   );
 }
@@ -54,11 +87,11 @@ function createColumn(data){
     div2.className="column-contain";
     div2.style.backgroundColor=tabColor[i-1];
 
-    if(i==1){
-        addTask.addEventListener('click',function(){
-            createTask(div2,data);
-        });
-    }
+    // if(i==1){
+    //     addTask.addEventListener('click',function(){
+    //         createTask(div2,data);
+    //     });
+    // }
 
     const divLogo = document.createElement('div');
     divLogo.className="logo";
@@ -79,7 +112,7 @@ function createColumn(data){
     i++;
 }
 
-function createTask(div,data){
+function createTask(div){
     const divTask = document.createElement('div');
     divTask.className="task";
 
@@ -91,10 +124,11 @@ function createTask(div,data){
 
     const divDesc = document.createElement('div');
     divDesc.className="taskInfo";
-    divDesc.innerText=data.description;
+    divDesc.innerText=texta.value;
 
     divTask.appendChild(i1);
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 }
+

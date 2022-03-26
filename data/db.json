@@ -1,10 +1,7 @@
+
 {
-    "taches": [
-        {
-            "description": "je test",
-            "date": "Adama",
-            "heureDebut": "joueur1@gmail.com",
-            "heureFin": "joueur1"
-        }
-    ]
+    "description": "first task",
+    "date": "",
+    "heureDebut": "",
+    "heureFin": ""
 }
