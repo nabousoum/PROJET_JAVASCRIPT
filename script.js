@@ -5,6 +5,20 @@ const colonne = document.getElementById('colonne');
 const notes = document.getElementById('notes');
 const close = document.getElementById('close');
 const modalContainer = document.querySelector('.modal-container');
+const addTask = document.getElementById('addTask');
+
+function getTask(){
+    fetch('data/db.json').then((reponse) => 
+    reponse.json().then((data) => {
+        console.log(data);
+        createColumn(data.taches[0])
+    })
+  );
+}
+
+getTask();
+
+
 
 notes.addEventListener('click',function(){
     modalContainer.classList.toggle('show-modal');
@@ -21,12 +35,13 @@ burger.addEventListener('click',function(){
 })
 
 var i=1;
-var tabColor=["#D4B8D9","#FDBEB4","#D5C4F5","#AFE9FF","#F5EED5"]
+var tabColor=["#D4B8D9","#FDBEB4","#D5C4F5","#AFE9FF","#F5EED5"];
+
 colonne.addEventListener('click',function(){
         createColumn();
 })
 
-function createColumn(){
+function createColumn(data){
     const divG = document.createElement('div');
     divG.className="column";
 
@@ -38,6 +53,12 @@ function createColumn(){
     const div2 = document.createElement('div');
     div2.className="column-contain";
     div2.style.backgroundColor=tabColor[i-1];
+
+    if(i==1){
+        addTask.addEventListener('click',function(){
+            createTask(div2,data);
+        });
+    }
 
     const divLogo = document.createElement('div');
     divLogo.className="logo";
@@ -56,4 +77,24 @@ function createColumn(){
         colonne.style.display="none";
     }
     i++;
+}
+
+function createTask(div,data){
+    const divTask = document.createElement('div');
+    divTask.className="task";
+
+    const i1 = document.createElement('i');
+    i1.className="fa-solid fa-angles-left";
+
+    const i2 = document.createElement('i');
+    i2.className="fa-solid fa-angles-right";
+
+    const divDesc = document.createElement('div');
+    divDesc.className="taskInfo";
+    divDesc.innerText=data.description;
+
+    divTask.appendChild(i1);
+    divTask.appendChild(i2);
+    divTask.appendChild(divDesc);
+    div.appendChild(divTask);
 }

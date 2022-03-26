@@ -43,6 +43,30 @@ body{
     animation: zoomIn;
     animation-duration: 2s; 
 }
+.task{
+    border: 1px solid black;
+    height: 5%;
+    background-color: transparent;
+    width: 95%;
+    margin: 10px 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.taskInfo{
+    margin-left: 10%;
+    width: 80%;
+    height: 100%;
+}
+.fa-solid.fa-angles-left{
+   position: absolute;
+   left: 10px;
+}
+.fa-solid.fa-angles-right{
+   position: absolute;
+   right: 10px;
+}
+
 .column-name{
     width: 100%;
     display: flex;
@@ -57,6 +81,7 @@ body{
 .column-contain{
     width: 100%;
     display: flex;
+    flex-direction: column;
     flex: 15;
 }
 .logo{

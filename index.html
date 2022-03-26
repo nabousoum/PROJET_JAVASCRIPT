@@ -26,7 +26,13 @@
                     <p>COLONNE 1</p>
                 </div>
                 <div class="column-contain">
-                   
+                   <div class="task">
+                        <i class="fa-solid fa-angles-left"></i>
+                        <div class="taskInfo">
+                            hello
+                        </div>
+                        <i class="fa-solid fa-angles-right"></i>
+                   </div>
                 </div>
                 <div class="logo">
                    <img height="120px" src="logoMyCutiePlanning.png" alt="">
@@ -47,7 +53,7 @@
                 </button>
             </div>
             <div id="modal-form">
-                <form action="">
+                <form action="index.html">
                     <p>Remplir les informations de la nouvelle tache</p>
                     <div>
                         <label for="textarea">Tache</label>
@@ -59,14 +65,14 @@
                     </div>
                     <div>
                         <label for="heureDebut">Heure Debut</label>
-                        <input type="datetime" name="heureDebut" id="heureDebut">
+                        <input type="time" name="heureDebut" id="heureDebut">
                     </div>
                     <div>
                         <label for="heureFin">Heure Fin</label>
-                        <input type="datetime" name="heureFin" id="heureFin">
+                        <input type="time" name="heureFin" id="heureFin">
                     </div>
                   
-                    <input type="submit" value="Ajouter">
+                    <input type="button" value="Ajouter" id="addTask">
                 </form>
             </div>
         </div>
