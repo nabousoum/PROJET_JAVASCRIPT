@@ -8,9 +8,9 @@ const modalContainer = document.querySelector('.modal-container');
 const addTask = document.getElementById('addTask');
 const myForm = document.getElementById('form');
 const texta = document.getElementById('textarea');
-var date = document.getElementById('date').value;
-var heureDebut = document.getElementById('heureDebut').value;
-var heureFin = document.getElementById('heureFin').value;
+const date = document.getElementById('date');
+const heureDebut = document.getElementById('heureDebut');
+const heureFin = document.getElementById('heureFin');
 
  
 myForm.addEventListener('submit',function(e){
@@ -77,7 +77,6 @@ colonne.addEventListener('click',function(){
 function createColumn(data){
     const divG = document.createElement('div');
     divG.className="column";
-    //divG.setAttribute('id',i);
 
     const div1 = document.createElement('div');
     div1.className="column-name";
@@ -110,6 +109,7 @@ function createColumn(data){
 }
  j=1;
 
+
 function createTask(div){
     const divTask = document.createElement('div');
     divTask.className="task";
@@ -124,31 +124,51 @@ function createTask(div){
     divDesc.className="taskInfo";
     divDesc.innerText=texta.value;
 
+    divTask.addEventListener('mouseenter',function(){
+        divTask.style.height="100px";
+        divDesc.innerHTML =`<p>date: ${date.value}</p>`;
+        divDesc.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
+        divDesc.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
+    })
+    divTask.addEventListener('mouseleave',function(){
+        divTask.style.height="50px";
+        divDesc.innerText=texta.value;
+    })
+
     divTask.appendChild(i1);
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
-   
-   //console.log(part_left);
- 
+
+    if(j==1)
+    i1.style.visibility="hidden";
+
         i1.addEventListener('click',function(){
                 //var part_left = document.getElementById(i);
                 j--;
-                var part_right = document.getElementById(i-1);
+                if(j==1)
+                i1.style.visibility="hidden";
+                else
+                i1.style.visibility="visible";
+                var part_right = document.getElementById(j);
                     divTask.classList.add('select');
-                    move(document.getElementById(j));
+                    move(part_right);
                     divTask.classList.remove('select');
+                console.log(j);
         });
-    
+      
         i2.addEventListener('click',function(){
-            j++;
-                var part_right = document.getElementById(i);
+            j++; 
+            if(j==1)
+            i1.style.visibility="hidden";
+            else
+            i1.style.visibility="visible";
+                var part_right = document.getElementById(j);
                     divTask.classList.add('select');
-                    move(document.getElementById(j));
+                    move(part_right);
                     divTask.classList.remove('select');
-            
         });
-    //console.log(part_left);
+             
 }
 
 function move(right){
@@ -159,4 +179,16 @@ function move(right){
                 right.appendChild(div);
             }
     });
+}
+
+function afficherBouton(){
+    if(j==1)
+    i1.style.visibility="hidden";
+    else
+    i1.style.visibility="visible";
+    if(j==5)
+    i2.style.visibility="hidden";
+    else
+    i2.style.visibility="visible";
+
 }

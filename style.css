@@ -62,8 +62,8 @@ body{
     border-radius: 5px;
     display: flex;
     align-items: center;
-    animation: jello;
-    animation-duration: 2s;
+    animation: zoomIn;
+    animation-duration: 1s;
 }
 .task::-webkit-scrollbar{
     width:10px;
