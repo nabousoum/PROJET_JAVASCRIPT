@@ -108,6 +108,7 @@ function createColumn(data){
     }
     i++;
 }
+ j=1;
 
 function createTask(div){
     const divTask = document.createElement('div');
@@ -131,28 +132,26 @@ function createTask(div){
    //console.log(part_left);
  
         i1.addEventListener('click',function(){
-            for(var i=1;i<=5;i++){
                 //var part_left = document.getElementById(i);
-                var part_right = document.getElementById(i);
+                j--;
+                var part_right = document.getElementById(i-1);
                     divTask.classList.add('select');
-                    move(part_right);
+                    move(document.getElementById(j));
                     divTask.classList.remove('select');
-            }
         });
     
         i2.addEventListener('click',function(){
-            for(var i=1;i<=5;i++){
-                var part_left = document.getElementById(i);
-                var part_right = document.getElementById(i+1);
+            j++;
+                var part_right = document.getElementById(i);
                     divTask.classList.add('select');
-                    move(part_left,part_right);
+                    move(document.getElementById(j));
                     divTask.classList.remove('select');
-            }
+            
         });
     //console.log(part_left);
 }
 
-function move(left,right){
+function move(right){
     const tabDiv = document.querySelectorAll('.task');
     console.log(tabDiv);
     tabDiv.forEach(div => {
