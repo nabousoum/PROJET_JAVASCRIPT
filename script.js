@@ -77,6 +77,7 @@ colonne.addEventListener('click',function(){
 function createColumn(data){
     const divG = document.createElement('div');
     divG.className="column";
+    //divG.setAttribute('id',i);
 
     const div1 = document.createElement('div');
     div1.className="column-name";
@@ -85,13 +86,9 @@ function createColumn(data){
 
     const div2 = document.createElement('div');
     div2.className="column-contain";
+    div2.setAttribute('id',i);
     div2.style.backgroundColor=tabColor[i-1];
 
-    // if(i==1){
-    //     addTask.addEventListener('click',function(){
-    //         createTask(div2,data);
-    //     });
-    // }
 
     const divLogo = document.createElement('div');
     divLogo.className="logo";
@@ -130,5 +127,37 @@ function createTask(div){
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
+   
+   //console.log(part_left);
+ 
+        i1.addEventListener('click',function(){
+            for(var i=1;i<=5;i++){
+                //var part_left = document.getElementById(i);
+                var part_right = document.getElementById(i);
+                    divTask.classList.add('select');
+                    move(part_right);
+                    divTask.classList.remove('select');
+            }
+        });
+    
+        i2.addEventListener('click',function(){
+            for(var i=1;i<=5;i++){
+                var part_left = document.getElementById(i);
+                var part_right = document.getElementById(i+1);
+                    divTask.classList.add('select');
+                    move(part_left,part_right);
+                    divTask.classList.remove('select');
+            }
+        });
+    //console.log(part_left);
 }
 
+function move(left,right){
+    const tabDiv = document.querySelectorAll('.task');
+    console.log(tabDiv);
+    tabDiv.forEach(div => {
+            if(div.classList.contains('select')){
+                right.appendChild(div);
+            }
+    });
+}
