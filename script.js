@@ -82,6 +82,12 @@ function createColumn(){
     div1.className="column-name";
     const p = document.createElement('p');
     p.innerText="colonne "+i;
+    const button = document.createElement('')
+
+    const input = document.createElement('input');
+    input.className='inputRename';
+    div1.appendChild(input);
+
 
     const div2 = document.createElement('div');
     div2.className="column-contain";
@@ -106,6 +112,19 @@ function createColumn(){
         colonne.style.display="none";
     }
     i++;
+
+    div1.addEventListener('dblclick',function(){
+        p.style.display="none";
+        input.style.display="block";
+        input.addEventListener('blur',function(){
+            p.style.display="block";
+            input.style.display="none";
+            input.focus();
+            //console.log(input.value);
+            p.innerText=input.value;
+        })
+    })
+    
 }
 
 function createTask(div){
@@ -142,28 +161,35 @@ function createTask(div){
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
-    var j=1;
-    if(j==1)
-    i1.style.visibility="hidden";
 
+    var test = parseInt(divTask.parentElement.getAttribute('id'));
+    if(test==1){
+        i1.style.visibility="hidden";
+    }
         i1.addEventListener('click',function(){
-                    divTask.classList.add('select');
-                    var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
-                    indice_left = indice_left-1;
-                    var part_left=document.getElementById(indice_left);
-                    move(part_left);
-                    divTask.classList.remove('select');
-              
+            i2.style.visibility="visible"
+            divTask.classList.add('select');
+            var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
+            indice_left = indice_left-1;
+            var part_left = document.getElementById(indice_left);
+            move(part_left);
+            divTask.classList.remove('select');
         });
       
         i2.addEventListener('click',function(){
-                    divTask.classList.add('select');
-                    var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
-                    indice_right = indice_right+1;
-                    var part_right = document.getElementById(indice_right);
-                    console.log(part_right);
-                    move(part_right);
-                    divTask.classList.remove('select');
+            var tab = document.querySelectorAll('.column-contain');
+            console.log(tab.length)
+            divTask.classList.add('select');
+            var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
+            i1.style.visibility="visible";
+            indice_right = indice_right+1;
+            if(indice_right==tab.length){
+                i2.style.visibility="hidden";
+            }
+            var part_right = document.getElementById(indice_right);
+            move(part_right);
+            divTask.classList.remove('select');
+
         });
              
 }
@@ -177,14 +203,6 @@ function move(right){
     });
 }
 
-function afficherBouton(){
-    if(j==1)
-    i1.style.visibility="hidden";
-    else
-    i1.style.visibility="visible";
-    if(j==5)
-    i2.style.visibility="hidden";
-    else
-    i2.style.visibility="visible";
-
+function afficherButton(){
+    
 }
