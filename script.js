@@ -81,8 +81,14 @@ function createColumn(){
     const div1 = document.createElement('div');
     div1.className="column-name";
     const p = document.createElement('p');
+    p.className="removable";
     p.innerText="colonne "+i;
-    const button = document.createElement('')
+
+    const but = document.createElement('button');
+    but.className="close-btn";
+    const iButton = document.createElement('i');
+    iButton.className="fa-solid fa-xmark";
+    but.appendChild(iButton);
 
     const input = document.createElement('input');
     input.className='inputRename';
@@ -104,10 +110,19 @@ function createColumn(){
 
     divLogo.appendChild(img);
     div1.appendChild(p);
+    div1.appendChild(but);
     divG.appendChild(div1);
     divG.appendChild(div2);
     divG.appendChild(divLogo);
     container.appendChild(divG);
+
+    but.addEventListener('click',function(e){
+        console.log( e.target.parentElement.parentElement.parentElement);
+        var tests = document.querySelectorAll('.column');
+        e.target.parentElement.parentElement.parentElement.remove();
+        refresh();
+    });
+
     if(i==5){
         colonne.style.display="none";
     }
@@ -205,4 +220,11 @@ function move(right){
 
 function afficherButton(){
     
+}
+
+function refresh(){
+    var removables = document.querySelectorAll('.removable');
+    removables.forEach((element,i) => {
+        element.innerHTML = `colonne ${i+1}`;
+    });
 }
