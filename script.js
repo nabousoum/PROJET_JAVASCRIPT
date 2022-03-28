@@ -74,7 +74,7 @@ colonne.addEventListener('click',function(){
         createColumn();
 })
 
-function createColumn(data){
+function createColumn(){
     const divG = document.createElement('div');
     divG.className="column";
 
@@ -107,8 +107,6 @@ function createColumn(data){
     }
     i++;
 }
- j=1;
-
 
 function createTask(div){
     const divTask = document.createElement('div');
@@ -124,47 +122,46 @@ function createTask(div){
     divDesc.className="taskInfo";
     divDesc.innerText=texta.value;
 
+    const divOver = document.createElement('div');
+    divOver.className="divOver";
+    divDesc.appendChild(divOver);
+
     divTask.addEventListener('mouseenter',function(){
+        divOver.style.display='block';
         divTask.style.height="100px";
-        divDesc.innerHTML =`<p>date: ${date.value}</p>`;
-        divDesc.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
-        divDesc.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
+        divOver.innerHTML =`<p>date: ${date.value}</p>`;
+        divOver.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
+        divOver.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
     })
     divTask.addEventListener('mouseleave',function(){
         divTask.style.height="50px";
-        divDesc.innerText=texta.value;
+        divOver.style.display="none";
     })
 
     divTask.appendChild(i1);
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
-
+    var j=1;
     if(j==1)
     i1.style.visibility="hidden";
 
         i1.addEventListener('click',function(){
-                //var part_left = document.getElementById(i);
-                j--;
-                if(j==1)
-                i1.style.visibility="hidden";
-                else
-                i1.style.visibility="visible";
-                var part_right = document.getElementById(j);
                     divTask.classList.add('select');
-                    move(part_right);
+                    var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
+                    indice_left = indice_left-1;
+                    var part_left=document.getElementById(indice_left);
+                    move(part_left);
                     divTask.classList.remove('select');
-                console.log(j);
+              
         });
       
         i2.addEventListener('click',function(){
-            j++; 
-            if(j==1)
-            i1.style.visibility="hidden";
-            else
-            i1.style.visibility="visible";
-                var part_right = document.getElementById(j);
                     divTask.classList.add('select');
+                    var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
+                    indice_right = indice_right+1;
+                    var part_right = document.getElementById(indice_right);
+                    console.log(part_right);
                     move(part_right);
                     divTask.classList.remove('select');
         });
@@ -173,7 +170,6 @@ function createTask(div){
 
 function move(right){
     const tabDiv = document.querySelectorAll('.task');
-    console.log(tabDiv);
     tabDiv.forEach(div => {
             if(div.classList.contains('select')){
                 right.appendChild(div);

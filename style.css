@@ -40,7 +40,7 @@ body{
     align-items: center;
     position: relative;
     animation: zoomIn;
-    animation-duration: 2s; 
+    animation-duration: 1s; 
     border-radius: 10px;
 }
 .column-contain::-webkit-scrollbar{
@@ -76,7 +76,12 @@ body{
 .taskInfo{
     margin-left: 10%;
     width: 80%;
+    display: flex;
     height: 100%;
+}
+.divOver{
+    display: none;
+    margin-left: -10%;
 }
 .fa-solid.fa-angles-left{
    position: absolute;
