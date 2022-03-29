@@ -59,8 +59,6 @@ function getTask(){
 
 getTask();
 
-
-
 notes.addEventListener('click',function(){
     modalContainer.classList.toggle('show-modal');
 })
@@ -69,8 +67,10 @@ close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
 })
 
+//  addTask.addEventListener('click',function(){
+//      modalContainer.classList.remove('show-modal');
+//  })
 
-window.addEventListener('click',e=>e.target == modalContainer ? modalContainer.classList.remove('show-modal') : false);
 
 burger.addEventListener('click',function(){ 
     header.classList.toggle('closeMenu');
@@ -93,11 +93,9 @@ function createColumn(){
     p.className="removable";
     p.innerText="colonne "+i;
 
-    const but = document.createElement('button');
-    but.className="close-btn";
     const iButton = document.createElement('i');
     iButton.className="fa-solid fa-xmark";
-    but.appendChild(iButton);
+    iButton.setAttribute('id','iButton');
 
     const input = document.createElement('input');
     input.className='inputRename';
@@ -109,6 +107,17 @@ function createColumn(){
     div2.setAttribute('id',i);
     div2.style.backgroundColor=tabColor[i-1];
 
+    iButton.addEventListener('click',function(e){
+        //console.log( e.target.parentElement.parentElement);
+        var testId = parseInt(e.target.parentElement.nextElementSibling.getAttribute('id'));
+        //console.log(testId)
+        var countColumn = document.querySelectorAll('.column').length;
+        console.log(countColumn);
+        if(testId!=1 || (countColumn==1 && testId==1) ){
+            e.target.parentElement.parentElement.remove();
+            refresh();
+        }
+    });
 
     const divLogo = document.createElement('div');
     divLogo.className="logo";
@@ -119,18 +128,11 @@ function createColumn(){
 
     divLogo.appendChild(img);
     div1.appendChild(p);
-    div1.appendChild(but);
+    div1.appendChild(iButton);
     divG.appendChild(div1);
     divG.appendChild(div2);
     divG.appendChild(divLogo);
     container.appendChild(divG);
-
-    but.addEventListener('click',function(e){
-        //console.log( e.target.parentElement.parentElement.parentElement);
-        var tests = document.querySelectorAll('.column');
-        e.target.parentElement.parentElement.parentElement.remove();
-        refresh();
-    });
 
     if(i==5){
         colonne.style.display="none";
