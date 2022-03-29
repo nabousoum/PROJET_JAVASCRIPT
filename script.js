@@ -11,6 +11,13 @@ const texta = document.getElementById('textarea');
 const date = document.getElementById('date');
 const heureDebut = document.getElementById('heureDebut');
 const heureFin = document.getElementById('heureFin');
+const restauration = document.getElementById('restauration');
+const nav = document.querySelector('.nav-bar');
+const trash = document.getElementById('menu-trash');
+
+trash.addEventListener('click',function(){
+    nav.classList.toggle('show-nav')
+})
 
  
 myForm.addEventListener('submit',function(e){
@@ -60,6 +67,7 @@ notes.addEventListener('click',function(){
 close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
 })
+
 
 window.addEventListener('click',e=>e.target == modalContainer ? modalContainer.classList.remove('show-modal') : false);
 
@@ -117,7 +125,7 @@ function createColumn(){
     container.appendChild(divG);
 
     but.addEventListener('click',function(e){
-        console.log( e.target.parentElement.parentElement.parentElement);
+        //console.log( e.target.parentElement.parentElement.parentElement);
         var tests = document.querySelectorAll('.column');
         e.target.parentElement.parentElement.parentElement.remove();
         refresh();
@@ -178,11 +186,11 @@ function createTask(div){
     div.appendChild(divTask);
 
     var test = parseInt(divTask.parentElement.getAttribute('id'));
-    if(test==1){
-        i1.style.visibility="hidden";
-    }
+    // if(test==1){
+    //     i1.style.visibility="hidden";
+    // }
         i1.addEventListener('click',function(){
-            i2.style.visibility="visible"
+            //i2.style.visibility="visible"
             divTask.classList.add('select');
             var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
             indice_left = indice_left-1;
@@ -193,14 +201,14 @@ function createTask(div){
       
         i2.addEventListener('click',function(){
             var tab = document.querySelectorAll('.column-contain');
-            console.log(tab.length)
+            //console.log(tab.length)
             divTask.classList.add('select');
             var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
-            i1.style.visibility="visible";
+            //i1.style.visibility="visible";
             indice_right = indice_right+1;
-            if(indice_right==tab.length){
-                i2.style.visibility="hidden";
-            }
+            // if(indice_right==tab.length){
+            //     i2.style.visibility="hidden";
+            // }
             var part_right = document.getElementById(indice_right);
             move(part_right);
             divTask.classList.remove('select');
@@ -208,6 +216,7 @@ function createTask(div){
         });
              
 }
+
 
 function move(right){
     const tabDiv = document.querySelectorAll('.task');
@@ -217,10 +226,16 @@ function move(right){
             }
     });
 }
-
-function afficherButton(){
-    
+function moveAll(right){
+    const tabDiv = document.querySelectorAll('.task');
+    tabDiv.forEach(div => {
+        right.appendChild(div);
+    });
 }
+restauration.addEventListener('click',function(){
+    console.log(document.querySelector('.column-contain'));
+    moveAll(document.querySelector('.column-contain'));;
+})
 
 function refresh(){
     var removables = document.querySelectorAll('.removable');

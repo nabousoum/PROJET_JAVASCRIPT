@@ -11,12 +11,12 @@ body{
 .header{
     background-color: rgb(245, 150, 165);
     display: flex;
-    flex: 1;
+    flex: 2;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     display: none;
-    animation: slideOutUp;
+    animation: pulse;
     animation-duration: 1s; 
 }
 .header.closeMenu{
@@ -28,8 +28,25 @@ body{
 }
 #container{
     display: flex;
-    width: 100%;
+    width: 85%;
     margin: 1% 5%;
+}
+
+.nav-bar{
+    display: flex;
+    flex-direction: column;
+   position: fixed;
+    right: 0;
+    border: 1px solid black;
+    width: 250px;
+    height: 100vh;
+    z-index: 100;
+    transform: translateX(250px);
+}
+.nav-bar.show-nav{
+    transform: translateX(0);
+    animation: fadeInRight;
+    animation-duration: 3s;
 }
 .column{
     width: 20%;
@@ -134,7 +151,7 @@ img{
     margin-right: 10%;
     font-size: large;
     width: 90%;
-    height: 30%;
+    height: 20%;
     flex: 2;
     border-radius: 5px;
     border-left: 5px solid #6a8cd1;
@@ -152,6 +169,12 @@ img{
     left: 10px;
    opacity: 0.5;
     padding: 1%;
+}
+#menu-trash{
+    position: fixed;
+    bottom: 15px;
+    right: 250px;
+    opacity: 0.5;
 }
 
 .modal-container{
@@ -218,7 +241,6 @@ input[type=submit]{
     width: 100%;
  }
  #modal-form form textarea{
-
     width: 100%;
  }
  .close-btn{
