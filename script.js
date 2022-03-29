@@ -186,10 +186,10 @@ function createTask(div){
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
-    divTask.addEventListener('dblclick',function(){
+    divTask.addEventListener('dblclick',function(e){
         divTask.classList.add('remove');
-        console.log(columnContainTrash);
-        moveTrash(columnContainTrash);
+        console.log(e.target);
+        columnContainTrash.appendChild(e.target.parentElement);
     })
 
     var test = parseInt(divTask.parentElement.getAttribute('id'));
@@ -240,14 +240,6 @@ function moveAll(right){
     });
 }
 
-function moveTrash(right){
-    const tabDiv = document.querySelectorAll('.task');
-    tabDiv.forEach(div => {
-        if(div.classList.contains('remove')){
-            right.appendChild(div);
-        }
-    });
-}
 restauration.addEventListener('click',function(){
     console.log(document.querySelector('.column-contain'));
     moveAll(document.querySelector('.column-contain'));;
