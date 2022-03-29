@@ -14,6 +14,7 @@ const heureFin = document.getElementById('heureFin');
 const restauration = document.getElementById('restauration');
 const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
+const columnContainTrash = document.getElementById('column-contain-trash');
 
 trash.addEventListener('click',function(){
     nav.classList.toggle('show-nav')
@@ -185,6 +186,12 @@ function createTask(div){
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
+    divTask.addEventListener('dblclick',function(){
+        divTask.classList.add('remove');
+        console.log(columnContainTrash);
+        moveTrash(columnContainTrash);
+    })
+
     var test = parseInt(divTask.parentElement.getAttribute('id'));
     // if(test==1){
     //     i1.style.visibility="hidden";
@@ -230,6 +237,15 @@ function moveAll(right){
     const tabDiv = document.querySelectorAll('.task');
     tabDiv.forEach(div => {
         right.appendChild(div);
+    });
+}
+
+function moveTrash(right){
+    const tabDiv = document.querySelectorAll('.task');
+    tabDiv.forEach(div => {
+        if(div.classList.contains('remove')){
+            right.appendChild(div);
+        }
     });
 }
 restauration.addEventListener('click',function(){

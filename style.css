@@ -19,6 +19,9 @@ body{
     animation: pulse;
     animation-duration: 1s; 
 }
+#column-contain-trash{
+    background-color:rgb(252, 213, 219) ;
+}
 .header.closeMenu{
     display: block;
 }
@@ -172,8 +175,8 @@ img{
 }
 #menu-trash{
     position: fixed;
-    bottom: 15px;
-    right: 250px;
+    bottom: 100px;
+    left: 30px;
     opacity: 0.5;
 }
 
