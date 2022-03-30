@@ -167,6 +167,10 @@ function createTask(div){
     iA.className="fa-solid fa-box-archive";
     iA.setAttribute('id','iArchive');
 
+    const iR = document.createElement('i');
+    iR.className="fa-solid fa-arrows-spin";
+    iR.setAttribute('id','iRecycle');
+
     const i2 = document.createElement('i');
     i2.className="fa-solid fa-angles-right";
 
@@ -179,8 +183,14 @@ function createTask(div){
     divDesc.appendChild(divOver);
 
     divTask.addEventListener('mouseenter',function(){
+        var testClass = divTask.parentElement.classList;
+        console.log(testClass)
         iA.style.display='block';
         divOver.style.display='block';
+        if(testClass.contains('column-contain2')){
+            iR.style.display="block";
+            iA.style.display='none';
+        }
         divTask.style.height="100px";
         divOver.innerHTML =`<p>date: ${date.value}</p>`;
         divOver.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
@@ -188,20 +198,27 @@ function createTask(div){
     })
     divTask.addEventListener('mouseleave',function(){
         iA.style.display='none';
+        iR.style.display="none";
         divTask.style.height="50px";
         divOver.style.display="none";
     })
 
     divTask.appendChild(i1);
     divTask.appendChild(iA);
+    divTask.appendChild(iR);
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
     iA.addEventListener('click',function(e){
-        divTask.classList.add('remove');
         console.log(e.target);
         columnContainTrash.appendChild(e.target.parentElement);
+    })
+
+    iR.addEventListener('click',function(e){
+        console.log(e.target);
+        var divColumn1 = document.querySelector('.column-contain')
+        divColumn1.appendChild(e.target.parentElement);
     })
 
     var test = parseInt(divTask.parentElement.getAttribute('id'));
@@ -234,6 +251,10 @@ function createTask(div){
 
         });
              
+        restauration.addEventListener('click',function(e){
+            moveAll(document.querySelector('.column-contain'));
+        })
+        
 }
 
 
@@ -248,20 +269,12 @@ function move(right){
 function moveAll(right){
     const tabDiv = document.querySelectorAll('.task');
     tabDiv.forEach(div => {
-        right.appendChild(div);
+        if(div.parentElement.classList.contains('column-contain') == true){
+            right.appendChild(div);
+        }
     });
 }
 
-restauration.addEventListener('click',function(e){
-    var tasks = document.querySelectorAll('.task');
-    console.log(columnContainTrash.getAttribute('id'));
-    tasks.forEach(task => {
-        if(task.parentElement.getAttribute('id') !== columnContainTrash.getAttribute('id')){
-            console.log(task.parentElement.getAttribute('id'));
-            moveAll(document.querySelector('.column-contain'));
-        }
-    });
-})
 
 function refresh(){
     var removables = document.querySelectorAll('.removable');

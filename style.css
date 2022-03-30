@@ -296,3 +296,11 @@ input[type=submit]{
  #iArchive{
      display: none;
  }
+ #iRecycle{
+     display: none;
+ }
+.fa-solid.fa-arrows-spin{
+    opacity: 0.5;
+    position: absolute;
+    right:40px ;
+}
