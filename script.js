@@ -252,9 +252,15 @@ function moveAll(right){
     });
 }
 
-restauration.addEventListener('click',function(){
-    //console.log(document.querySelector('.column-contain'));
-    moveAll(document.querySelector('.column-contain'));;
+restauration.addEventListener('click',function(e){
+    var tasks = document.querySelectorAll('.task');
+    console.log(columnContainTrash.getAttribute('id'));
+    tasks.forEach(task => {
+        if(task.parentElement.getAttribute('id') !== columnContainTrash.getAttribute('id')){
+            console.log(task.parentElement.getAttribute('id'));
+            moveAll(document.querySelector('.column-contain'));
+        }
+    });
 })
 
 function refresh(){
