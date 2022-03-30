@@ -11,7 +11,7 @@ const texta = document.getElementById('textarea');
 const date = document.getElementById('date');
 const heureDebut = document.getElementById('heureDebut');
 const heureFin = document.getElementById('heureFin');
-const restauration = document.getElementById('restauration');
+const restauration = document.getElementById('menu-recycle');
 const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
 const columnContainTrash = document.getElementById('column-contain-trash');
@@ -46,6 +46,7 @@ myForm.addEventListener('submit',function(e){
        
         var text = texta.value;
         createTask(div2);
+        myForm.reset();
 })
 
 function getTask(){
@@ -66,7 +67,9 @@ notes.addEventListener('click',function(){
 close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
 })
-
+addTask.addEventListener('click',function(){
+    modalContainer.classList.remove('show-modal');
+})
 //  addTask.addEventListener('click',function(){
 //      modalContainer.classList.remove('show-modal');
 //  })
@@ -108,13 +111,13 @@ function createColumn(){
     div2.style.backgroundColor=tabColor[i-1];
 
     iButton.addEventListener('click',function(e){
-        //console.log( e.target.parentElement.parentElement);
         var testId = parseInt(e.target.parentElement.nextElementSibling.getAttribute('id'));
-        //console.log(testId)
         var countColumn = document.querySelectorAll('.column').length;
         console.log(countColumn);
         if(testId!=1 || (countColumn==1 && testId==1) ){
             e.target.parentElement.parentElement.remove();
+            i--;
+            colonne.style.display="block";
             refresh();
         }
     });
@@ -160,6 +163,10 @@ function createTask(div){
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
 
+    const iA = document.createElement('i');
+    iA.className="fa-solid fa-box-archive";
+    iA.setAttribute('id','iArchive');
+
     const i2 = document.createElement('i');
     i2.className="fa-solid fa-angles-right";
 
@@ -172,6 +179,7 @@ function createTask(div){
     divDesc.appendChild(divOver);
 
     divTask.addEventListener('mouseenter',function(){
+        iA.style.display='block';
         divOver.style.display='block';
         divTask.style.height="100px";
         divOver.innerHTML =`<p>date: ${date.value}</p>`;
@@ -179,16 +187,18 @@ function createTask(div){
         divOver.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
     })
     divTask.addEventListener('mouseleave',function(){
+        iA.style.display='none';
         divTask.style.height="50px";
         divOver.style.display="none";
     })
 
     divTask.appendChild(i1);
+    divTask.appendChild(iA);
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
-    divTask.addEventListener('dblclick',function(e){
+    iA.addEventListener('click',function(e){
         divTask.classList.add('remove');
         console.log(e.target);
         columnContainTrash.appendChild(e.target.parentElement);
@@ -243,7 +253,7 @@ function moveAll(right){
 }
 
 restauration.addEventListener('click',function(){
-    console.log(document.querySelector('.column-contain'));
+    //console.log(document.querySelector('.column-contain'));
     moveAll(document.querySelector('.column-contain'));;
 })
 
