@@ -148,10 +148,7 @@ function createTask(div){
     divTask.setAttribute('data-date',date.value);
     divTask.setAttribute('data-hour-begin',heureDebut.value);
     divTask.setAttribute('data-hour-end',heureFin.value);
-
-
-   
-    
+    divTask.setAttribute('class','task testEdit');
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
 
@@ -165,8 +162,8 @@ function createTask(div){
     i2.className="fa-solid fa-angles-right";
 
     const divDesc = document.createElement('div');
-    divDesc.className="taskInfo";
-    divDesc.innerText=texta.value;
+    divDesc.className = "taskInfo";
+    divDesc.innerText = texta.value;
 
     const divOver = document.createElement('div');
     divOver.className="divOver";
@@ -183,9 +180,9 @@ function createTask(div){
     div.appendChild(divTask);
 
     setInterval(() => {
-        var dateValue = date.value;
-        var heureDebutValue = heureDebut.value;
-        var heureFinValue = heureFin.value;
+        var dateValue = divTask.getAttribute('data-date');
+        var heureDebutValue = divTask.getAttribute('data-hour-begin');
+        var heureFinValue = divTask.getAttribute('data-hour-end');
 
         var time_input_debut = heureDebutValue.split(':');
         var heure_input_debut = time_input_debut[0];
@@ -194,48 +191,51 @@ function createTask(div){
         var time_input_fin = heureFinValue.split(':');
         var heure_input_fin = time_input_fin[0];
         var min_input_fin = time_input_fin[1];
-        // console.log(heure_input_fin);
-        // console.log(min_input_fin);
 
         var now = new Date();
         var hour_now = now.getHours();
         var min_now = now.getMinutes();
         if((heure_input_debut == hour_now) && (min_input_debut == min_now)){
-            //alert('ok')
-            divTask.style.backgroundColor="green";
+            divTask.style.backgroundColor = "green";
         }
         else if((heure_input_fin == hour_now) && (min_input_fin == min_now)){
-            //alert('ok');
-            divTask.style.backgroundColor="gray";
+            console.log(divTask);
+            divTask.style.backgroundColor = "gray";
             i1.style.visibility="hidden";
             i2.style.visibility="hidden";
             iA.style.visibility="hidden";
+            divTask.classList.remove('testEdit');
         }
         
    },1000); 
+
+   
     divTask.addEventListener('dblclick',function(e){
-
-        modalContainer.classList.toggle('show-modal');
-        //console.log(divTask.getAttribute('data-text'))
-        texta.value = divTask.getAttribute('data-text');
-        date.value = divTask.getAttribute('data-date');
-        heureDebut.value = divTask.getAttribute('data-hour-begin');
-        heureFin.value = divTask.getAttribute('data-hour-end');
-        addTask.setAttribute('data-edit','edit');
-
-            addTask.addEventListener('click',function(){
-                if(addTask.getAttribute('data-edit') == 'edit'){
-                    divTask.setAttribute('data-text',texta.value);
-                    divTask.setAttribute('data-date',date.value);
-                    divTask.setAttribute('data-hour-begin',heureDebut.value);
-                    divTask.setAttribute('data-hour-end',heureFin.value);
-                    divDesc.innerText=divTask.getAttribute('data-text');
-                    divOver.innerHTML =`<p>date: ${divTask.getAttribute('data-date')}</p>`;
-                    divOver.innerHTML +=`<p>heure debut: ${divTask.getAttribute('data-hour-begin')}</p>`;
-                    divOver.innerHTML +=`<p>heure fin: ${divTask.getAttribute('data-hour-end')}</p>`;
-                }
-                //addTask.removeAttribute('data-edit');
-            })
+        if(divTask.classList.contains('testEdit')){
+            modalContainer.classList.toggle('show-modal');
+            //console.log(divTask.getAttribute('data-text'))
+            texta.value = divTask.getAttribute('data-text');
+            date.value = divTask.getAttribute('data-date');
+            heureDebut.value = divTask.getAttribute('data-hour-begin');
+            heureFin.value = divTask.getAttribute('data-hour-end');
+            addTask.setAttribute('data-edit','edit');
+    
+            var cssObj = window.getComputedStyle(divTask);
+            var color = cssObj.backgroundColor;
+                addTask.addEventListener('click',function(){
+                    if(addTask.getAttribute('data-edit') == 'edit'){
+                        divTask.setAttribute('data-text',texta.value);
+                        divTask.setAttribute('data-date',date.value);
+                        divTask.setAttribute('data-hour-begin',heureDebut.value);
+                        divTask.setAttribute('data-hour-end',heureFin.value);
+                        divDesc.innerText=divTask.getAttribute('data-text');
+                        divOver.innerHTML =`<p>date: ${divTask.getAttribute('data-date')}</p>`;
+                        divOver.innerHTML +=`<p>heure debut: ${divTask.getAttribute('data-hour-begin')}</p>`;
+                        divOver.innerHTML +=`<p>heure fin: ${divTask.getAttribute('data-hour-end')}</p>`;
+                    }
+                    //addTask.removeAttribute('data-edit');
+                })
+        }
     })
 
     divTask.addEventListener('mouseenter',function(){
