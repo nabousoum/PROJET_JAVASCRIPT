@@ -68,21 +68,25 @@
             <div id="modal-form">
                 <form id="form">
                     <p>Remplir les informations de la nouvelle tache</p>
-                    <div>
+                    <div class="form-control">
                         <label for="textarea">Tache</label>
                         <textarea name="textarea" id="textarea" cols="30" rows="10"></textarea>
+                        <small>Error message</small>
                     </div>
-                    <div>
+                    <div class="form-control">
                         <label for="date">Date</label>
                         <input type="date" name="date" id="date">
+                        <small>Error message</small>
                     </div>
-                    <div>
+                    <div class="form-control">
                         <label for="heureDebut">Heure Debut</label>
                         <input type="time" name="heureDebut" id="heureDebut">
+                        <small>Error message</small>
                     </div>
-                    <div>
+                    <div class="form-control">
                         <label for="heureFin">Heure Fin</label>
                         <input type="time" name="heureFin" id="heureFin">
+                        <small>Error message</small>
                     </div>
                   
                     <button type="submit" id="addTask">Ajouter</button>

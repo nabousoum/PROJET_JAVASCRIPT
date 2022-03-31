@@ -20,19 +20,18 @@ trash.addEventListener('click',function(){
     nav.classList.toggle('show-nav')
 })
 
- 
 myForm.addEventListener('submit',function(e){
 
-    e.preventDefault();
+    //if(!checkRequired([texta, date, heureDebut, heureFin])){
+        e.preventDefault();
+      //  checkRequired([texta, date, heureDebut, heureFin]);
+   // }
    if(addTask.getAttribute('data-edit') != 'edit'){
         const div2 = document.querySelector('.column-contain');
-        console.log(date.value);
         createTask(div2);
    }
-   else{
-       
-   }
-   // myForm.reset();
+    //  myForm.reset();
+    addTask.removeAttribute('data-edit');
 })
 
 function getTask(){
@@ -51,6 +50,7 @@ notes.addEventListener('click',function(){
 
 close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
+    addTask.removeAttribute('data-edit');
 })
 addTask.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
@@ -98,7 +98,7 @@ function createColumn(){
     iButton.addEventListener('click',function(e){
         var testId = parseInt(e.target.parentElement.nextElementSibling.getAttribute('id'));
         var countColumn = document.querySelectorAll('.column').length;
-        console.log(countColumn);
+        //console.log(countColumn);
         if(testId!=1 || (countColumn==1 && testId==1) ){
             e.target.parentElement.parentElement.remove();
             i--;
@@ -188,39 +188,10 @@ function createTask(div){
 
     const divOver = document.createElement('div');
     divOver.className="divOver";
+    divOver.innerHTML =`<p>date: ${date.value}</p>`;
+    divOver.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
+    divOver.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
     divDesc.appendChild(divOver);
-
-    divTask.addEventListener('dblclick',function(e){
-
-        modalContainer.classList.toggle('show-modal');
-        console.log(divTask.getAttribute('data-text'))
-        texta.value = divTask.getAttribute('data-text');
-        date.value = divTask.getAttribute('data-date');
-        heureDebut.value = divTask.getAttribute('data-hour-begin');
-        heureFin.value = divTask.getAttribute('data-hour-end');
-
-        addTask.setAttribute('data-edit','edit');
-    })
-
-    divTask.addEventListener('mouseenter',function(){
-        var testClass = divTask.parentElement.classList;
-        iA.style.display='block';
-        divOver.style.display='block';
-        if(testClass.contains('column-contain2')){
-            iR.style.display="block";
-            iA.style.display='none';
-        }
-        divTask.style.height="100px";
-        divOver.innerHTML =`<p>date: ${date.value}</p>`;
-        divOver.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
-        divOver.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
-    })
-    divTask.addEventListener('mouseleave',function(){
-        iA.style.display='none';
-        iR.style.display="none";
-        divTask.style.height="50px";
-        divOver.style.display="none";
-    })
 
     divTask.appendChild(i1);
     divTask.appendChild(iA);
@@ -228,6 +199,47 @@ function createTask(div){
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
+    divTask.addEventListener('dblclick',function(e){
+
+        modalContainer.classList.toggle('show-modal');
+        //console.log(divTask.getAttribute('data-text'))
+        texta.value = divTask.getAttribute('data-text');
+        date.value = divTask.getAttribute('data-date');
+        heureDebut.value = divTask.getAttribute('data-hour-begin');
+        heureFin.value = divTask.getAttribute('data-hour-end');
+        addTask.setAttribute('data-edit','edit');
+
+            addTask.addEventListener('click',function(){
+                if(addTask.getAttribute('data-edit') == 'edit'){
+                    divTask.setAttribute('data-text',texta.value);
+                    divTask.setAttribute('data-date',date.value);
+                    divTask.setAttribute('data-hour-begin',heureDebut.value);
+                    divTask.setAttribute('data-hour-end',heureFin.value);
+                    divDesc.innerText=divTask.getAttribute('data-text');
+                    divOver.innerHTML =`<p>date: ${divTask.getAttribute('data-date')}</p>`;
+                    divOver.innerHTML +=`<p>heure debut: ${divTask.getAttribute('data-hour-begin')}</p>`;
+                    divOver.innerHTML +=`<p>heure fin: ${divTask.getAttribute('data-hour-end')}</p>`;
+                }
+                //addTask.removeAttribute('data-edit');
+            })
+    })
+
+    divTask.addEventListener('mouseenter',function(){
+        var testClass = divTask.parentElement.classList;
+        iA.style.display = 'block';
+        divOver.style.display = 'block';
+        if(testClass.contains('column-contain2')){
+            iR.style.display = "block";
+            iA.style.display = 'none';
+        }
+        divTask.style.height = "100px";
+    })
+    divTask.addEventListener('mouseleave',function(){
+        iA.style.display = 'none';
+        iR.style.display = "none";
+        divTask.style.height = "50px";
+        divOver.style.display = "none";
+    })
 
     // var test = parseInt(divTask.parentElement.getAttribute('id'));
     // var tests = test+1;
@@ -251,11 +263,11 @@ function createTask(div){
     })
 
     var test = parseInt(divTask.parentElement.getAttribute('id'));
-    if(test==1){
-        i1.style.visibility="hidden";
-    }
+    // if(test==1){
+    //     i1.style.visibility="hidden";
+    // }
         i1.addEventListener('click',function(){
-            i2.style.visibility="visible"
+            //i2.style.visibility="visible"
             divTask.classList.add('select');
             var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
             indice_left = indice_left-1;
@@ -268,11 +280,11 @@ function createTask(div){
             var tab = document.querySelectorAll('.column-contain'); 
             divTask.classList.add('select');
             var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
-            i1.style.visibility="visible";
+            //i1.style.visibility="visible";
             indice_right = indice_right+1;
-            if((indice_right==tab.length) ){
-                i2.style.visibility="hidden";
-            }
+            // if((indice_right==tab.length) ){
+            //     i2.style.visibility="hidden";
+            // }
             var part_right = document.getElementById(indice_right);
             move(part_right);
             divTask.classList.remove('select');
@@ -311,3 +323,25 @@ function refresh(){
     });
 }
 
+function showError(input, message) {
+    const formControl = input.parentElement;
+    formControl.className = 'form-control error';
+    const small = formControl.querySelector('small');
+    small.innerText = message;
+}
+//
+function showSuccess(input) {
+    const formControl = input.parentElement;
+    formControl.className = 'form-control success'; 
+}
+function checkRequired(inputArray) {
+    inputArray.forEach(input => {
+        if (input.value.trim() === '') {
+            showError(input,"veuillez remplir ce champ");
+            return false;
+        }else{
+            showSuccess(input);
+            return true;
+        }
+    });
+}
