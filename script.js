@@ -163,21 +163,21 @@ function createTask(div){
     var hour_now = now.getHours();
     var min_now = now.getMinutes();
 
-    if((heure_input_debut==hour_now) && (min_input_debut == min_now)){
-        alert('ok')
-        divTask.style.backgroundColor="green";
-    }
+    setInterval(() => {
+        if((heure_input_debut==hour_now) && (min_input_debut == min_now)){
+            //alert('ok')
+            divTask.style.backgroundColor="green";
+        }
+   },1000); 
     
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
 
     const iA = document.createElement('i');
     iA.className="fa-solid fa-box-archive";
-    iA.setAttribute('id','iArchive');
 
     const iR = document.createElement('i');
     iR.className="fa-solid fa-arrows-spin";
-    iR.setAttribute('id','iRecycle');
 
     const i2 = document.createElement('i');
     i2.className="fa-solid fa-angles-right";
@@ -262,12 +262,15 @@ function createTask(div){
         divColumn1.appendChild(e.target.parentElement);
     })
 
-    var test = parseInt(divTask.parentElement.getAttribute('id'));
-    // if(test==1){
-    //     i1.style.visibility="hidden";
-    // }
+   
+    setInterval(() => {
+        var test = parseInt(divTask.parentElement.getAttribute('id'));
+        if(test==1){
+            i1.style.visibility="hidden";
+        }
+    },1000); 
         i1.addEventListener('click',function(){
-            //i2.style.visibility="visible"
+            i2.style.visibility="visible"
             divTask.classList.add('select');
             var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
             indice_left = indice_left-1;
@@ -280,11 +283,18 @@ function createTask(div){
             var tab = document.querySelectorAll('.column-contain'); 
             divTask.classList.add('select');
             var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
-            //i1.style.visibility="visible";
+            i1.style.visibility="visible";
             indice_right = indice_right+1;
-            // if((indice_right==tab.length) ){
-            //     i2.style.visibility="hidden";
-            // }
+            setInterval(() => {
+                var tab = document.querySelectorAll('.column-contain'); 
+                var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
+                if((indice_right==tab.length) ){
+                    i2.style.visibility="hidden";
+                }
+                else{
+                    i2.style.visibility="visible";
+                }
+            },1000); 
             var part_right = document.getElementById(indice_right);
             move(part_right);
             divTask.classList.remove('select');

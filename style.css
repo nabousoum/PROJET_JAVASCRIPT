@@ -299,19 +299,16 @@ input[type=submit]{
      opacity: 0.5;
      position: absolute;
      right:40px ;
-     top:10%;
- }
- #iArchive{
+     top:65px;
      display: none;
  }
- #iRecycle{
-     display: none;
- }
+ 
 .fa-solid.fa-arrows-spin{
-    top:10%;
+    top:50px;
     opacity: 0.5;
     position: absolute;
-    right:40px ;
+    right:65px ;
+    display: none;
 }
 
 .form-control.success input{
