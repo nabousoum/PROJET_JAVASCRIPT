@@ -150,25 +150,7 @@ function createTask(div){
     divTask.setAttribute('data-hour-end',heureFin.value);
 
 
-    setInterval(() => {
-        var dateValue = date.value;
-        var heureDebutValue = heureDebut.value;
-        var heureFinValue = heureFin.value;
-
-        var time_input_debut = heureDebutValue.split(':');
-        var heure_input_debut = time_input_debut[0];
-        var min_input_debut = time_input_debut[1];
-        // console.log(heure_input_debut);
-        // console.log(min_input_debut);
-
-        var now = new Date();
-        var hour_now = now.getHours();
-        var min_now = now.getMinutes();
-        if((heure_input_debut==hour_now) && (min_input_debut == min_now)){
-            //alert('ok')
-            divTask.style.backgroundColor="green";
-        }
-   },1000); 
+   
     
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
@@ -199,6 +181,38 @@ function createTask(div){
     divTask.appendChild(i2);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
+
+    setInterval(() => {
+        var dateValue = date.value;
+        var heureDebutValue = heureDebut.value;
+        var heureFinValue = heureFin.value;
+
+        var time_input_debut = heureDebutValue.split(':');
+        var heure_input_debut = time_input_debut[0];
+        var min_input_debut = time_input_debut[1];
+
+        var time_input_fin = heureFinValue.split(':');
+        var heure_input_fin = time_input_fin[0];
+        var min_input_fin = time_input_fin[1];
+        // console.log(heure_input_fin);
+        // console.log(min_input_fin);
+
+        var now = new Date();
+        var hour_now = now.getHours();
+        var min_now = now.getMinutes();
+        if((heure_input_debut == hour_now) && (min_input_debut == min_now)){
+            //alert('ok')
+            divTask.style.backgroundColor="green";
+        }
+        else if((heure_input_fin == hour_now) && (min_input_fin == min_now)){
+            //alert('ok');
+            divTask.style.backgroundColor="gray";
+            i1.style.visibility="hidden";
+            i2.style.visibility="hidden";
+            iA.style.visibility="hidden";
+        }
+        
+   },1000); 
     divTask.addEventListener('dblclick',function(e){
 
         modalContainer.classList.toggle('show-modal');
@@ -240,18 +254,6 @@ function createTask(div){
         divTask.style.height = "50px";
         divOver.style.display = "none";
     })
-
-    // var test = parseInt(divTask.parentElement.getAttribute('id'));
-    // var tests = test+1;
-    // setInterval(() => {
-    //     if(document.getElementById(tests)==null)
-    //     {
-    //         i2.style.visibility="hidden";
-    //     }
-    //     else{
-    //         i2.style.visibility="visible";
-    //     }
-    // },100); 
 
     iA.addEventListener('click',function(e){
         columnContainTrash.appendChild(e.target.parentElement);
