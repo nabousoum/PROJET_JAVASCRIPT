@@ -22,37 +22,22 @@ trash.addEventListener('click',function(){
 
  
 myForm.addEventListener('submit',function(e){
+
     e.preventDefault();
-    const div2 = document.querySelector('.column-contain');
-    var textarea = document.getElementById('textarea').value;
-    var date = document.getElementById('date').value;
-    var heureDebut = document.getElementById('heureDebut').value;
-    var heureFin = document.getElementById('heureFin').value;
-    //var data = new FormData();
-   // data.append( "json", JSON.stringify( payload ) );
-    
-    fetch("data/db.json",
-    {
-        method: "POST",
-        body: JSON.stringify({
-            description:textarea,
-            date:date,
-            heureDebut:heureDebut,
-            heureFin:heureFin
-        }),
-    })
-    .then(function(res){ return res.json(); })
-    .then(function(data){ console.log(data ) })
-       
-        var text = texta.value;
+   if(addTask.getAttribute('data-edit') != 'edit'){
+        const div2 = document.querySelector('.column-contain');
+        console.log(date.value);
         createTask(div2);
-        myForm.reset();
+   }
+   else{
+       
+   }
+   // myForm.reset();
 })
 
 function getTask(){
     fetch('data/db.json').then((reponse) => 
     reponse.json().then((data) => {
-        //console.log(data);
         createColumn(data);
     })
   );
@@ -149,7 +134,6 @@ function createColumn(){
             p.style.display="block";
             input.style.display="none";
             input.focus();
-            //console.log(input.value);
             p.innerText=input.value;
         })
     })
@@ -159,7 +143,31 @@ function createColumn(){
 function createTask(div){
     const divTask = document.createElement('div');
     divTask.className="task";
+    
+    divTask.setAttribute('data-text',texta.value);
+    divTask.setAttribute('data-date',date.value);
+    divTask.setAttribute('data-hour-begin',heureDebut.value);
+    divTask.setAttribute('data-hour-end',heureFin.value);
 
+    var dateValue = date.value;
+    var heureDebutValue = heureDebut.value;
+    var heureFinValue = heureFin.value;
+
+    var time_input_debut = heureDebutValue.split(':');
+    var heure_input_debut = time_input_debut[0];
+    var min_input_debut = time_input_debut[1];
+    // console.log(heure_input_debut);
+    // console.log(min_input_debut);
+
+    var now = new Date();
+    var hour_now = now.getHours();
+    var min_now = now.getMinutes();
+
+    if((heure_input_debut==hour_now) && (min_input_debut == min_now)){
+        alert('ok')
+        divTask.style.backgroundColor="green";
+    }
+    
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
 
@@ -182,9 +190,20 @@ function createTask(div){
     divOver.className="divOver";
     divDesc.appendChild(divOver);
 
+    divTask.addEventListener('dblclick',function(e){
+
+        modalContainer.classList.toggle('show-modal');
+        console.log(divTask.getAttribute('data-text'))
+        texta.value = divTask.getAttribute('data-text');
+        date.value = divTask.getAttribute('data-date');
+        heureDebut.value = divTask.getAttribute('data-hour-begin');
+        heureFin.value = divTask.getAttribute('data-hour-end');
+
+        addTask.setAttribute('data-edit','edit');
+    })
+
     divTask.addEventListener('mouseenter',function(){
         var testClass = divTask.parentElement.classList;
-        console.log(testClass)
         iA.style.display='block';
         divOver.style.display='block';
         if(testClass.contains('column-contain2')){
@@ -210,23 +229,33 @@ function createTask(div){
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
+    // var test = parseInt(divTask.parentElement.getAttribute('id'));
+    // var tests = test+1;
+    // setInterval(() => {
+    //     if(document.getElementById(tests)==null)
+    //     {
+    //         i2.style.visibility="hidden";
+    //     }
+    //     else{
+    //         i2.style.visibility="visible";
+    //     }
+    // },100); 
+
     iA.addEventListener('click',function(e){
-        console.log(e.target);
         columnContainTrash.appendChild(e.target.parentElement);
     })
 
     iR.addEventListener('click',function(e){
-        console.log(e.target);
         var divColumn1 = document.querySelector('.column-contain')
         divColumn1.appendChild(e.target.parentElement);
     })
 
     var test = parseInt(divTask.parentElement.getAttribute('id'));
-    // if(test==1){
-    //     i1.style.visibility="hidden";
-    // }
+    if(test==1){
+        i1.style.visibility="hidden";
+    }
         i1.addEventListener('click',function(){
-            //i2.style.visibility="visible"
+            i2.style.visibility="visible"
             divTask.classList.add('select');
             var indice_left = parseInt(divTask.parentElement.getAttribute('id'));
             indice_left = indice_left-1;
@@ -236,15 +265,14 @@ function createTask(div){
         });
       
         i2.addEventListener('click',function(){
-            var tab = document.querySelectorAll('.column-contain');
-            //console.log(tab.length)
+            var tab = document.querySelectorAll('.column-contain'); 
             divTask.classList.add('select');
             var indice_right = parseInt(divTask.parentElement.getAttribute('id'));
-            //i1.style.visibility="visible";
+            i1.style.visibility="visible";
             indice_right = indice_right+1;
-            // if(indice_right==tab.length){
-            //     i2.style.visibility="hidden";
-            // }
+            if((indice_right==tab.length) ){
+                i2.style.visibility="hidden";
+            }
             var part_right = document.getElementById(indice_right);
             move(part_right);
             divTask.classList.remove('select');
@@ -282,3 +310,4 @@ function refresh(){
         element.innerHTML = `colonne ${i+1}`;
     });
 }
+

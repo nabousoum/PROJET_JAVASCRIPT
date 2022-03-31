@@ -156,9 +156,12 @@ body{
 .logo{
     position: absolute;
     top:40%;
+    animation: tada;
+    animation-duration: 1s;
+    opacity: 0.6;
 }
 img{
-    opacity: 0.6;
+    
     border-radius: 50%;
     border: 1px solid rgb(245, 150, 165);
 }
@@ -292,6 +295,7 @@ input[type=submit]{
      opacity: 0.5;
      position: absolute;
      right:40px ;
+     top:10%;
  }
  #iArchive{
      display: none;
@@ -300,6 +304,7 @@ input[type=submit]{
      display: none;
  }
 .fa-solid.fa-arrows-spin{
+    top:10%;
     opacity: 0.5;
     position: absolute;
     right:40px ;
