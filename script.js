@@ -149,21 +149,21 @@ function createTask(div){
     divTask.setAttribute('data-hour-begin',heureDebut.value);
     divTask.setAttribute('data-hour-end',heureFin.value);
 
-    var dateValue = date.value;
-    var heureDebutValue = heureDebut.value;
-    var heureFinValue = heureFin.value;
-
-    var time_input_debut = heureDebutValue.split(':');
-    var heure_input_debut = time_input_debut[0];
-    var min_input_debut = time_input_debut[1];
-    // console.log(heure_input_debut);
-    // console.log(min_input_debut);
-
-    var now = new Date();
-    var hour_now = now.getHours();
-    var min_now = now.getMinutes();
 
     setInterval(() => {
+        var dateValue = date.value;
+        var heureDebutValue = heureDebut.value;
+        var heureFinValue = heureFin.value;
+
+        var time_input_debut = heureDebutValue.split(':');
+        var heure_input_debut = time_input_debut[0];
+        var min_input_debut = time_input_debut[1];
+        // console.log(heure_input_debut);
+        // console.log(min_input_debut);
+
+        var now = new Date();
+        var hour_now = now.getHours();
+        var min_now = now.getMinutes();
         if((heure_input_debut==hour_now) && (min_input_debut == min_now)){
             //alert('ok')
             divTask.style.backgroundColor="green";
