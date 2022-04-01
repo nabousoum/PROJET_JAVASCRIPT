@@ -44,9 +44,6 @@ function getTask(){
 
 getTask();
 
-notes.addEventListener('click',function(){
-    modalContainer.classList.toggle('show-modal');
-})
 
 close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
@@ -65,6 +62,12 @@ burger.addEventListener('click',function(){
 })
 
 var i=1;
+notes.addEventListener('click',function(){
+    if(i !== 1){
+        modalContainer.classList.toggle('show-modal');
+    }
+})
+
 var tabColor=["#D4B8D9","#FDBEB4","#D5C4F5","#AFE9FF","#F5EED5"];
 
 colonne.addEventListener('click',function(){
