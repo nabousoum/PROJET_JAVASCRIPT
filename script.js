@@ -280,12 +280,13 @@ function createTask(div){
         //     i1.style.visibility="hidden";
         //     i2.style.visibility="hidden";
         // }
+        iR.addEventListener('click',function(e){
+            var divColumn1 = document.getElementById(search);
+            divColumn1.appendChild(e.target.parentElement);
+        })
     })
 
-    iR.addEventListener('click',function(e){
-        var divColumn1 = document.querySelector('.column-contain')
-        divColumn1.appendChild(e.target.parentElement);
-    })
+    
 
    
     setInterval(() => {
