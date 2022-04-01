@@ -16,22 +16,27 @@ const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
 const columnContainTrash = document.getElementById('column-contain-trash');
 
+console.log(date.getAttribute('min'));
+
 trash.addEventListener('click',function(){
     nav.classList.toggle('show-nav')
 })
 
 myForm.addEventListener('submit',function(e){
-
-    //if(!checkRequired([texta, date, heureDebut, heureFin])){
-        e.preventDefault();
-      //  checkRequired([texta, date, heureDebut, heureFin]);
-   // }
-   if(addTask.getAttribute('data-edit') != 'edit'){
-        const div2 = document.querySelector('.column-contain');
-        createTask(div2);
+    e.preventDefault();
+        if(checkRequired(texta) == false){
+            //e.preventDefault();
+            checkRequired(texta);
+        }
+        else{
+            //console.log("ok")
+            if(addTask.getAttribute('data-edit') != 'edit'){
+                const div2 = document.querySelector('.column-contain');
+                createTask(div2);
+                myForm.reset();
+                addTask.removeAttribute('data-edit');
+        }
    }
-    //  myForm.reset();
-    addTask.removeAttribute('data-edit');
 })
 
 function getTask(){
@@ -49,9 +54,9 @@ close.addEventListener('click',function(){
     modalContainer.classList.remove('show-modal');
     addTask.removeAttribute('data-edit');
 })
-addTask.addEventListener('click',function(){
-    modalContainer.classList.remove('show-modal');
-})
+// addTask.addEventListener('click',function(){
+//     modalContainer.classList.remove('show-modal');
+// })
 //  addTask.addEventListener('click',function(){
 //      modalContainer.classList.remove('show-modal');
 //  })
@@ -241,8 +246,8 @@ function createTask(div){
                             divTask.setAttribute('data-hour-end',heureFin.value);
                             divDesc.innerText = divTask.getAttribute('data-text');
                             p1.innerText = `Date : ${divTask.getAttribute('data-date')}`;
-                            p2.innerText = `Date : ${divTask.getAttribute('data-hour-begin')}`;
-                            p3.innerText = `Date : ${divTask.getAttribute('data-hour-end')}`;
+                            p2.innerText = `Heure debut : ${divTask.getAttribute('data-hour-begin')}`;
+                            p3.innerText = `Heure fin : ${divTask.getAttribute('data-hour-end')}`;
                             divOver.appendChild(p1);
                             divOver.appendChild(p2);
                             divOver.appendChild(p3);
@@ -283,12 +288,11 @@ function createTask(div){
         iR.addEventListener('click',function(e){
             var divColumn1 = document.getElementById(search);
             divColumn1.appendChild(e.target.parentElement);
+            //i2.style.visibility = "visible";
         })
     })
 
     
-
-   
     setInterval(() => {
         var test = parseInt(divTask.parentElement.getAttribute('id'));
         if(test==1){
@@ -370,14 +374,14 @@ function showSuccess(input) {
     const formControl = input.parentElement;
     formControl.className = 'form-control success'; 
 }
-function checkRequired(inputArray) {
-    inputArray.forEach(input => {
-        if (input.value.trim() === '') {
-            showError(input,"veuillez remplir ce champ");
-            return false;
-        }else{
-            showSuccess(input);
-            return true;
-        }
-    });
+
+function checkRequired(input) {
+   
+    if (input.value.trim() === '') {
+        showError(input,"veuillez remplir ce champ");
+        return false;
+    }else{
+        showSuccess(input);
+        return true;
+    }
 }
