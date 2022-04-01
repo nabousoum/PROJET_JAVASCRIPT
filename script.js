@@ -39,15 +39,15 @@ myForm.addEventListener('submit',function(e){
    }
 })
 
-function getTask(){
-    fetch('data/db.json').then((reponse) => 
-    reponse.json().then((data) => {
-        createColumn(data);
-    })
-  );
-}
+// function getTask(){
+//     fetch('data/db.json').then((reponse) => 
+//     reponse.json().then((data) => {
+//         createColumn();
+//     })
+//   );
+// }
 
-getTask();
+// getTask();
 
 
 close.addEventListener('click',function(){
@@ -385,3 +385,27 @@ function checkRequired(input) {
         return true;
     }
 }
+
+window.onload = async () => {
+    var data = await testFetch();
+    console.log(data);
+}
+
+async function testFetch() {
+
+    var formTest = new FormData();
+    formTest.append("controller","tache");
+    formTest.append("prenom","seynabou");
+    formTest.append("nom","soumare");
+
+    const rawResponse = await fetch('../PROJET_JAVASCRIPT_MVC/public/index.php', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: formTest
+    });
+    return await rawResponse.json();
+  
+  };
