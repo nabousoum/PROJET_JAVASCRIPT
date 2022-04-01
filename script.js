@@ -16,7 +16,13 @@ const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
 const columnContainTrash = document.getElementById('column-contain-trash');
 
-console.log(date.getAttribute('min'));
+var n = new Date();
+function formatISOLocal(d) {
+    let z = n => ('0' + n).slice(-2);
+    return d.getFullYear()+'-'+z(d.getMonth()+1) + '-' + z(d.getDate());
+  }
+  date.setAttribute('min',formatISOLocal(n));
+  console.log(formatISOLocal(n));
 
 trash.addEventListener('click',function(){
     nav.classList.toggle('show-nav')
@@ -24,9 +30,10 @@ trash.addEventListener('click',function(){
 
 myForm.addEventListener('submit',function(e){
     e.preventDefault();
-        if(checkRequired(texta) == false){
+        if((checkRequired(texta) == false) || (checkHour(heureDebut,heureFin) == false)){
             //e.preventDefault();
             checkRequired(texta);
+            checkHour(heureDebut,heureFin);
         }
         else{
             //console.log("ok")
@@ -215,7 +222,7 @@ function createTask(div){
             divTask.style.backgroundColor = "green";
         }
         else if((heure_input_fin == hour_now) && (min_input_fin == min_now)){
-            console.log(divTask);
+           // console.log(divTask);
             divTask.style.backgroundColor = "gray";
             i1.style.visibility="hidden";
             i2.style.visibility="hidden";
@@ -383,6 +390,26 @@ function checkRequired(input) {
     }else{
         showSuccess(input);
         return true;
+    }
+}
+
+function checkHour(input1,input2){
+    var startTime = moment(input1.value, 'HH:mm');
+    var endTime = moment(input2.value, 'HH:mm');
+
+    var duration = moment.duration(endTime.diff(startTime));
+
+    var hours = parseInt(duration.asHours());
+
+    var minutes = parseInt(duration.asMinutes()) % 60;
+
+    if(hours <=0 && minutes <=0 ){
+        showError(input1," ");
+        showError(input2,"l heure de fin doit etre superieur a l heure de debut");
+        return false;
+    }
+    else{
+    return true;
     }
 }
 

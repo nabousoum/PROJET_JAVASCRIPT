@@ -314,6 +314,13 @@ input[type=submit]{
 .form-control.error textarea{
     border: 3px solid var(--error-color);
 }
+.form-control.success input{
+    border: 2px solid var(--success-color);
+}
+
+.form-control.error input{
+    border: 2px solid var(--error-color);
+}
 
 .form-control small{
     color: var(--error-color);
