@@ -167,15 +167,23 @@ function createTask(div){
 
     const divOver = document.createElement('div');
     divOver.className="divOver";
-    divOver.innerHTML =`<p>date: ${date.value}</p>`;
-    divOver.innerHTML +=`<p>heure debut: ${heureDebut.value}</p>`;
-    divOver.innerHTML +=`<p>heure fin: ${heureFin.value}</p>`;
-    divDesc.appendChild(divOver);
+    
+    const p1 = document.createElement('p');
+    p1.innerText = `Date : ${date.value}` ;
+    const p2 = document.createElement('p');
+    p2.innerText = `Heure debut : ${heureDebut.value}`;
+    const p3 = document.createElement('p');
+    p3.innerText = `Heure fin : ${heureFin.value}`;
+    divOver.appendChild(p1);
+    divOver.appendChild(p2);
+    divOver.appendChild(p3);
+   
 
     divTask.appendChild(i1);
     divTask.appendChild(iA);
     divTask.appendChild(iR);
     divTask.appendChild(i2);
+    divDesc.appendChild(divOver);
     divTask.appendChild(divDesc);
     div.appendChild(divTask);
 
@@ -209,33 +217,39 @@ function createTask(div){
         
    },1000); 
 
-   
     divTask.addEventListener('dblclick',function(e){
-        if(divTask.classList.contains('testEdit')){
-            modalContainer.classList.toggle('show-modal');
-            //console.log(divTask.getAttribute('data-text'))
-            texta.value = divTask.getAttribute('data-text');
-            date.value = divTask.getAttribute('data-date');
-            heureDebut.value = divTask.getAttribute('data-hour-begin');
-            heureFin.value = divTask.getAttribute('data-hour-end');
-            addTask.setAttribute('data-edit','edit');
-    
-            var cssObj = window.getComputedStyle(divTask);
-            var color = cssObj.backgroundColor;
-                addTask.addEventListener('click',function(){
-                    if(addTask.getAttribute('data-edit') == 'edit'){
-                        divTask.setAttribute('data-text',texta.value);
-                        divTask.setAttribute('data-date',date.value);
-                        divTask.setAttribute('data-hour-begin',heureDebut.value);
-                        divTask.setAttribute('data-hour-end',heureFin.value);
-                        divDesc.innerText=divTask.getAttribute('data-text');
-                        divOver.innerHTML =`<p>date: ${divTask.getAttribute('data-date')}</p>`;
-                        divOver.innerHTML +=`<p>heure debut: ${divTask.getAttribute('data-hour-begin')}</p>`;
-                        divOver.innerHTML +=`<p>heure fin: ${divTask.getAttribute('data-hour-end')}</p>`;
-                    }
-                    //addTask.removeAttribute('data-edit');
-                })
+        if(divTask.parentElement.classList.contains('column-contain2')==false){
+            if(divTask.classList.contains('testEdit')){
+                modalContainer.classList.toggle('show-modal');
+                //console.log(divTask.getAttribute('data-text'))
+                texta.value = divTask.getAttribute('data-text');
+                date.value = divTask.getAttribute('data-date');
+                heureDebut.value = divTask.getAttribute('data-hour-begin');
+                heureFin.value = divTask.getAttribute('data-hour-end');
+                addTask.setAttribute('data-edit','edit');
+        
+                var cssObj = window.getComputedStyle(divTask);
+                var color = cssObj.backgroundColor;
+                    addTask.addEventListener('click',function(){
+                        if(addTask.getAttribute('data-edit') == 'edit'){
+                            divTask.setAttribute('data-text',texta.value);
+                            divTask.setAttribute('data-date',date.value);
+                            divTask.setAttribute('data-hour-begin',heureDebut.value);
+                            divTask.setAttribute('data-hour-end',heureFin.value);
+                            divDesc.innerText = divTask.getAttribute('data-text');
+                            p1.innerText = `Date : ${divTask.getAttribute('data-date')}`;
+                            p2.innerText = `Date : ${divTask.getAttribute('data-hour-begin')}`;
+                            p3.innerText = `Date : ${divTask.getAttribute('data-hour-end')}`;
+                            divOver.appendChild(p1);
+                            divOver.appendChild(p2);
+                            divOver.appendChild(p3);
+                            divDesc.appendChild(divOver)
+                            divTask.appendChild(divDesc);
+                        }
+                    })
+            }
         }
+        
     })
 
     divTask.addEventListener('mouseenter',function(){
@@ -256,7 +270,13 @@ function createTask(div){
     })
 
     iA.addEventListener('click',function(e){
+        var search = e.target.parentElement.parentElement.getAttribute('id');
+        console.log(search)
         columnContainTrash.appendChild(e.target.parentElement);
+        // if(e.target.parentElement.parentElement.classList.contains('column-contain2')==true){
+        //     i1.style.visibility="hidden";
+        //     i2.style.visibility="hidden";
+        // }
     })
 
     iR.addEventListener('click',function(e){
