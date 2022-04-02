@@ -15,6 +15,7 @@ const restauration = document.getElementById('menu-recycle');
 const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
 const columnContainTrash = document.getElementById('column-contain-trash');
+const menuSave = document.getElementById('menu-save');
 
 var n = new Date();
 function formatISOLocal(d) {
@@ -413,24 +414,20 @@ function checkHour(input1,input2){
     }
 }
 
-window.onload = async () => {
+menuSave.addEventListener ('click',async () => {
     var data = await testFetch();
     console.log(data);
-}
-
+})
 async function testFetch() {
 
     var formTest = new FormData();
     formTest.append("controller","tache");
+    formTest.append("action","create");
     formTest.append("prenom","seynabou");
     formTest.append("nom","soumare");
 
-    const rawResponse = await fetch('../PROJET_JAVASCRIPT_MVC/public/index.php', {
+    let rawResponse = await fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/', {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
       body: formTest
     });
     return await rawResponse.json();

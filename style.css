@@ -210,6 +210,13 @@ img{
     left: 30px;
     opacity: 0.5;
 }
+#menu-save{
+     position: fixed;
+    bottom: 220px;
+    left: 15px;
+   opacity: 0.5;
+    padding: 1%;
+}
 .modal-container{
     display: none;
     background-color: rgba(0, 0, 0, 0.5);
