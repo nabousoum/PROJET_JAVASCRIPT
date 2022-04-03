@@ -369,6 +369,12 @@ function refresh(){
     removables.forEach((element,i) => {
         element.innerHTML = `colonne ${i+1}`;
     });
+
+    var removablesId = document.querySelectorAll('.column-contain');
+    removablesId.forEach((id,i) => {
+        i++;
+        id.setAttribute('id',i);
+    });
 }
 
 function showError(input, message) {
@@ -420,12 +426,36 @@ menuSave.addEventListener ('click',async () => {
 })
 async function testFetch() {
 
+    var tab = [];
+    var columns = document.querySelectorAll('.column');
+    columns.forEach(column => {
+        var tasks = column.querySelectorAll('.task');
+        var nomColonne = column.childNodes[0].innerText;
+        var positionColumn = column.childNodes[1].getAttribute('id');
+        tasks.forEach(task => {
+            var object = {
+                taches : Array({
+                    label_task : task.getAttribute('data-text'),
+                    date_task : task.getAttribute('data-date'),
+                    hour_task_begin : task.getAttribute('data-hour-begin'),
+                    hour_task_end : task.getAttribute('data-hour-end'),
+                    nom_colonne : nomColonne,
+                    position_colonne : positionColumn,
+                })
+            }
+            tab.push(object);
+        });
+    });
+
+    var json = JSON.stringify(tab);
+
     var formTest = new FormData();
+    var dateNow =  moment().format('MMMM Do YYYY, h:mm:ss a');
     formTest.append("controller","tache");
     formTest.append("action","create");
-    formTest.append("prenom","seynabou");
-    formTest.append("nom","soumare");
-
+    formTest.append("column",json);
+    formTest.append("dateNow",dateNow);
+    //formTest.append("nom_colonne",nomColonne);
     let rawResponse = await fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/', {
       method: 'POST',
       body: formTest
@@ -433,3 +463,5 @@ async function testFetch() {
     return await rawResponse.json();
   
   };
+
+  console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
