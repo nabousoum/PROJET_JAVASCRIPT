@@ -79,6 +79,7 @@ body{
     border: 1px solid rgb(163, 160, 160);
     height: 50px;
     overflow-y: scroll;
+    overflow-x: hidden;
     background-color: transparent;
     width: 95%;
     margin: 10px 5px;
@@ -104,8 +105,10 @@ body{
     height: 100%;
 }
 .divOver{
+    margin-top: 10%;
+    margin-left: -30%;
     display: none;
-    margin: 10%;
+    width: 300px;
 }
 .fa-solid.fa-angles-left{
    position: absolute;
@@ -185,6 +188,7 @@ img{
     border-left: 5px solid #6a8cd1;
 }
 .styleIn-header:hover{
+    width: 75%;
     background-color: #6a8cd1;
     color: white;
     border-left: 5px solid white;
@@ -194,13 +198,13 @@ img{
 #menu-burger{
     position: fixed;
     bottom: 10px;
-    left: 20px;
+    left: 15px;
    opacity: 0.5;
     padding: 1%;
 }
 #menu-trash{
     position: fixed;
-    bottom: 90px;
+    bottom: 100px;
     left: 30px;
     opacity: 0.5;
 }
@@ -213,7 +217,7 @@ img{
 #menu-save{
      position: fixed;
     bottom: 230px;
-    left: 25px;
+    left: 15px;
    opacity: 0.5;
     padding: 1%;
 }
@@ -337,3 +341,8 @@ input[type=submit]{
 .form-control.error small{
     visibility: visible;
 }
+
+ .center{
+     position: fixed;
+     top: 400px;
+ }

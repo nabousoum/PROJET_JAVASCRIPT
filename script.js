@@ -289,7 +289,7 @@ function createTask(div,tab){
             iR.style.display = "block";
             iA.style.display = 'none';
         }
-        divTask.style.height = "100px";
+        divTask.style.height = "140px";
     })
     divTask.addEventListener('mouseleave',function(){
         iA.style.display = 'none';
