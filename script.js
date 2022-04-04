@@ -48,7 +48,7 @@ myForm.addEventListener('submit',function(e){
 })
 
 // function getTask(){
-//     fetch('data/db.json').then((reponse) => 
+//     fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=listerTache').then((reponse) => 
 //     reponse.json().then((data) => {
 //         createColumn();
 //     })
@@ -179,7 +179,7 @@ function createTask(div){
 
     const divDesc = document.createElement('div');
     divDesc.className = "taskInfo";
-    divDesc.innerText = texta.value;
+    divDesc.innerHTML = `<b>${texta.value}</b>`;
 
     const divOver = document.createElement('div');
     divOver.className="divOver";
@@ -451,10 +451,12 @@ async function testFetch() {
 
     var formTest = new FormData();
     var dateNow =  moment().format('MMMM Do YYYY, h:mm:ss a');
+    var cptColumns = document.querySelectorAll('.column').length;
     formTest.append("controller","tache");
     formTest.append("action","create");
     formTest.append("column",json);
     formTest.append("dateNow",dateNow);
+    formTest.append("cptColumns",cptColumns);
     //formTest.append("nom_colonne",nomColonne);
     let rawResponse = await fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/', {
       method: 'POST',
@@ -465,3 +467,37 @@ async function testFetch() {
   };
 
   console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
+
+//   async function getfetch(){
+//       var response  = await fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=listerTache');
+//       return await response.json();
+//   }
+ 
+
+function generateColumn(cpt){
+    for(var i=0; i<cpt;i++){
+        if(cpt<=5){
+            createColumn();
+        }
+    }
+}
+
+function getTask(){
+    fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=listerTache')
+    .then(response => response.json()
+    .then(data => {
+        //console.log(data)
+        generateColumn(data.cptColumns);
+        var tasks = data.column;
+        tasks.forEach(element => {
+            element.taches.forEach(el2 => {
+                createTask(document.getElementById(el2.position_colonne))
+            });
+        });
+        console.log(tasks);
+    }));
+}
+window.addEventListener('load',function(){
+    getTask();
+})
+
