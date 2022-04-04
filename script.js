@@ -77,6 +77,7 @@ burger.addEventListener('click',function(){
 var i=1;
 notes.addEventListener('click',function(){
     if(i !== 1){
+        addTask.removeAttribute('data-refresh');
         modalContainer.classList.toggle('show-modal');
     }
 })
@@ -156,15 +157,26 @@ function createColumn(){
     
 }
 
-function createTask(div){
+function createTask(div,tab){
     const divTask = document.createElement('div');
     divTask.className="task";
     
-    divTask.setAttribute('data-text',texta.value);
-    divTask.setAttribute('data-date',date.value);
-    divTask.setAttribute('data-hour-begin',heureDebut.value);
-    divTask.setAttribute('data-hour-end',heureFin.value);
+    if(addTask.getAttribute('data-refresh') == 'refresh'){
+        divTask.setAttribute('data-text',tab.label_task);
+        divTask.setAttribute('data-date',tab.date_task);
+        divTask.setAttribute('data-hour-begin',tab.hour_task_begin);
+        divTask.setAttribute('data-hour-end',tab.hour_task_end);
+    }
+
+    else{
+        divTask.setAttribute('data-text',texta.value);
+        divTask.setAttribute('data-date',date.value);
+        divTask.setAttribute('data-hour-begin',heureDebut.value);
+        divTask.setAttribute('data-hour-end',heureFin.value);
+    }
+   
     divTask.setAttribute('class','task testEdit');
+
     const i1 = document.createElement('i');
     i1.className="fa-solid fa-angles-left";
 
@@ -179,17 +191,17 @@ function createTask(div){
 
     const divDesc = document.createElement('div');
     divDesc.className = "taskInfo";
-    divDesc.innerHTML = `<b>${texta.value}</b>`;
+    divDesc.innerHTML = `<b>${divTask.getAttribute('data-text')}</b>`;
 
     const divOver = document.createElement('div');
     divOver.className="divOver";
     
     const p1 = document.createElement('p');
-    p1.innerText = `Date : ${date.value}` ;
+    p1.innerText = `Date : ${divTask.getAttribute('data-date')}` ;
     const p2 = document.createElement('p');
-    p2.innerText = `Heure debut : ${heureDebut.value}`;
+    p2.innerText = `Heure debut : ${divTask.getAttribute('data-hour-begin')}`;
     const p3 = document.createElement('p');
-    p3.innerText = `Heure fin : ${heureFin.value}`;
+    p3.innerText = `Heure fin : ${divTask.getAttribute('data-hour-end')}`;
     divOver.appendChild(p1);
     divOver.appendChild(p2);
     divOver.appendChild(p3);
@@ -236,6 +248,7 @@ function createTask(div){
     divTask.addEventListener('dblclick',function(e){
         if(divTask.parentElement.classList.contains('column-contain2')==false){
             if(divTask.classList.contains('testEdit')){
+                addTask.removeAttribute('data-refresh');
                 modalContainer.classList.toggle('show-modal');
                 //console.log(divTask.getAttribute('data-text'))
                 texta.value = divTask.getAttribute('data-text');
@@ -483,6 +496,7 @@ function generateColumn(cpt){
 }
 
 function getTask(){
+    addTask.setAttribute('data-refresh','refresh');
     fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=listerTache')
     .then(response => response.json()
     .then(data => {
@@ -491,7 +505,8 @@ function getTask(){
         var tasks = data.column;
         tasks.forEach(element => {
             element.taches.forEach(el2 => {
-                createTask(document.getElementById(el2.position_colonne))
+                createTask(document.getElementById(el2.position_colonne),el2);
+                console.log(el2.hour_task_begin);
             });
         });
         console.log(tasks);
