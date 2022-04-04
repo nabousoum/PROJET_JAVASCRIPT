@@ -344,5 +344,5 @@ input[type=submit]{
 
  .center{
      position: fixed;
-     top: 400px;
+     bottom: 0;
  }

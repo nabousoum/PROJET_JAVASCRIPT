@@ -16,6 +16,7 @@ const nav = document.querySelector('.nav-bar');
 const trash = document.getElementById('menu-trash');
 const columnContainTrash = document.getElementById('column-contain-trash');
 const menuSave = document.getElementById('menu-save');
+const select = document.getElementById('select');
 
 var n = new Date();
 function formatISOLocal(d) {
@@ -23,7 +24,7 @@ function formatISOLocal(d) {
     return d.getFullYear()+'-'+z(d.getMonth()+1) + '-' + z(d.getDate());
   }
   date.setAttribute('min',formatISOLocal(n));
-  console.log(formatISOLocal(n));
+  //console.log(formatISOLocal(n));
 
 trash.addEventListener('click',function(){
     nav.classList.toggle('show-nav')
@@ -300,7 +301,7 @@ function createTask(div,tab){
 
     iA.addEventListener('click',function(e){
         var search = e.target.parentElement.parentElement.getAttribute('id');
-        console.log(search)
+        //console.log(search)
         columnContainTrash.appendChild(e.target.parentElement);
         // if(e.target.parentElement.parentElement.classList.contains('column-contain2')==true){
         //     i1.style.visibility="hidden";
@@ -435,7 +436,7 @@ function checkHour(input1,input2){
 
 menuSave.addEventListener ('click',async () => {
     var data = await testFetch();
-    console.log(data);
+    //console.log(data);
 })
 async function testFetch() {
 
@@ -479,7 +480,7 @@ async function testFetch() {
   
   };
 
-  console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
+  //console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
 
 //   async function getfetch(){
 //       var response  = await fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=listerTache');
@@ -506,13 +507,44 @@ function getTask(){
         tasks.forEach(element => {
             element.taches.forEach(el2 => {
                 createTask(document.getElementById(el2.position_colonne),el2);
-                console.log(el2.hour_task_begin);
+                //console.log(el2.hour_task_begin);
             });
         });
-        console.log(tasks);
+        //console.log(tasks);
+    }));
+}
+
+function getSelected(){
+    fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=restaurer')
+    .then(response => response.json()
+    .then(data => {
+      data.forEach(element => {
+         //console.log(element.dateNow);
+         const option = document.createElement('option');
+         option.setAttribute('value',element.dateNow);
+         option.innerText=element.dateNow;
+         select.appendChild(option);
+         select.addEventListener('change',function(){
+            choice = select.selectedIndex;
+            var valeur_cherchee = select.options[choice].value
+           if(valeur_cherchee === element.dateNow){
+               console.log(element.cptColumns);
+               container.innerHTML="";  
+                generateColumn(element.cptColumns);
+                var tasks = element.column;
+                tasks.forEach(element => {
+                    element.taches.forEach(el2 => {
+                        createTask(document.getElementById(el2.position_colonne),el2);
+                        //console.log(el2.hour_task_begin);
+                    });
+                });
+           }
+       })
+      });
     }));
 }
 window.addEventListener('load',function(){
     getTask();
+    getSelected();
 })
 
