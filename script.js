@@ -514,37 +514,38 @@ function getTask(){
     }));
 }
 
-function getSelected(){
-    fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=restaurer')
-    .then(response => response.json()
-    .then(data => {
-      data.forEach(element => {
-         //console.log(element.dateNow);
-         const option = document.createElement('option');
-         option.setAttribute('value',element.dateNow);
-         option.innerText=element.dateNow;
-         select.appendChild(option);
-         select.addEventListener('change',function(){
-            choice = select.selectedIndex;
-            var valeur_cherchee = select.options[choice].value
-           if(valeur_cherchee === element.dateNow){
-               console.log(element.cptColumns);
-               container.innerHTML="";  
-                generateColumn(element.cptColumns);
-                var tasks = element.column;
-                tasks.forEach(element => {
-                    element.taches.forEach(el2 => {
-                        createTask(document.getElementById(el2.position_colonne),el2);
-                        //console.log(el2.hour_task_begin);
-                    });
-                });
-           }
-       })
-      });
-    }));
-}
+// function getSelected(){
+//     fetch('http://127.0.0.1/PROJET_JAVASCRIPT_MVC/public/?controller=tache&action=restaurer')
+//     .then(response => response.json()
+//     .then(data => {
+//       data.forEach(element => {
+//          //console.log(element.dateNow);
+//          const option = document.createElement('option');
+//          option.setAttribute('value',element.dateNow);
+//          option.innerText=element.dateNow;
+//          select.appendChild(option);
+//          select.addEventListener('change',function(){
+//             choice = select.selectedIndex;
+//             var valeur_cherchee = select.options[choice].value
+//            if(valeur_cherchee === element.dateNow){
+//                //console.log(element.cptColumns);
+//                container.innerHTML="";  
+//                 generateColumn(element.cptColumns);
+//                 var tasks = element.column;
+//                 tasks.forEach(element => {
+//                     element.taches.forEach(el2 => {
+//                         createTask(document.getElementById(el2.position_colonne),el2);
+//                         //console.log(el2.hour_task_begin);
+//                         console.log(document.getElementById(el2.position_colonne))
+//                     });
+//                 });
+//            }
+//        })
+//       });
+//     }));
+// }
 window.addEventListener('load',function(){
     getTask();
-    getSelected();
+    //getSelected();
 })
 
